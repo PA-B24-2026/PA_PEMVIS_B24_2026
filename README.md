@@ -1,18 +1,17 @@
-# PA_PEMVIS_B24_2026
-Sistem Tier List Hero Meta Mobile Legend berbasis Windows Application Form untuk Proyek Akhir Praktikum Pemrograman Visual 2026 Kelas B24
+# Project Final Praktikum - Sistem Tier List Hero Meta Mobile Legend
 
-# Project Final Praktikum - [Nama Aplikasi Kamu]
-
-Selamat datang di repositori kelompok kami! Proyek ini dikembangkan untuk memenuhi tugas akhir mata kuliah **Pemrograman Berorientasi Objek (PBO)** dan **Pemrograman Visual (PEMVIS)**.
+Selamat datang di repositori kelompok kami! Proyek ini dikembangkan untuk memenuhi tugas akhir mata kuliah **Pemrograman Visual (PEMVIS)**.
 
 ## 👥 Anggota Kelompok
 | Nama | NIM |
---------------
-| Daffa | 2409106050|
-
+| :---: | :---: |
+| Ananda Daffa Harahap | 2409106050 |
+| Ridwan Nur Rahman | 2409106064 |
+| Aulia Nur Rachman | 2409106069 |
+| Razib Ramadhan | 2409106076 |
 ---
 
-## 🚀 Cara Menghubungkan Kode Lokal ke GitHub
+## Cara Menghubungkan Kode Lokal ke GitHub (Khusus Anggota)
 Jika kamu adalah anggota tim yang memegang kode sumber pertama kali, ikuti langkah ini untuk menghubungkan folder lokal ke repositori ini tanpa menghapus file yang ada:
 
 1.  **Buka Terminal** (atau Terminal di Visual Studio) di dalam folder proyek kamu.
@@ -37,7 +36,7 @@ Jika kamu adalah anggota tim yang memegang kode sumber pertama kali, ikuti langk
 
 ---
 
-## 🛠️ Prasyarat (Prerequisites)
+## Prasyarat (Prerequisites)
 Sebelum menjalankan aplikasi ini, pastikan kamu sudah menginstal:
 *   **Java Development Kit (JDK)** versi 17 atau terbaru (untuk PBO).
 *   **Visual Studio** atau **VS Code** dengan ekstensi yang sesuai.
@@ -45,10 +44,17 @@ Sebelum menjalankan aplikasi ini, pastikan kamu sudah menginstal:
 
 ---
 
-## 💻 Cara Menjalankan Aplikasi
+## Cara Menjalankan Aplikasi
 
 ### 1. Clone Repositori
 Jika kamu baru ingin mengambil kode dari GitHub ke laptop baru:
 ```bash
 git clone [https://github.com/NAMA_ORGANISASI/NAMA_REPO.git](https://github.com/NAMA_ORGANISASI/NAMA_REPO.git)
 cd NAMA_REPO
+```
+
+### 2. Setelah clone, jalankan program seperti biasa menggunakan visual studio
+1. Masuk ke aplikasi visual studio.
+2. Buka folder dimana repo _di-clone_.
+3. Kemudian klik tombol run seperti biasanya.
+4. Selamat! Programnya telah berhasil dijalankan
