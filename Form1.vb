@@ -23,7 +23,6 @@ Public Class Form1
             lv.View = View.LargeIcon
         Next
 
-        ' Isi ComboBox jika belum terisi via Properties
         If cbLane.Items.Count = 0 Then
             cbLane.Items.AddRange(New String() {"Jungle", "Roam", "ExpLane", "GoldLane", "MidLane"})
         End If
@@ -63,7 +62,6 @@ Public Class Form1
         cbLane.Text = hero.Lane
         cbTier.Text = hero.GradeTier
 
-        ' Tampilkan gambar
         pathGambar = hero.Gambar
         If File.Exists(pathGambar) Then
             gambar.ImageLocation = pathGambar
@@ -72,7 +70,6 @@ Public Class Form1
             gambar.Image = Nothing
         End If
 
-        ' Centang CheckBox Role
         cbAssasin.Checked = hero.Role.Contains("Assasin")
         cbFighter.Checked = hero.Role.Contains("Fighter")
         cbMarksman.Checked = hero.Role.Contains("Marksman")
@@ -80,7 +77,6 @@ Public Class Form1
         cbSupport.Checked = hero.Role.Contains("Support")
         cbMage.Checked = hero.Role.Contains("Mage")
 
-        ' Centang CheckedListBox Counter & Sinergi
         For i As Integer = 0 To clbCounter.Items.Count - 1
             clbCounter.SetItemChecked(i, hero.Counter.Contains(clbCounter.Items(i).ToString()))
         Next
@@ -89,9 +85,6 @@ Public Class Form1
         Next
     End Sub
 
-    ' =========================================================
-    ' VALIDASI INPUT (delegasi ke ValidationModule)
-    ' =========================================================
 
     Private Sub Role_CheckedChanged(sender As Object, e As EventArgs) _
         Handles cbAssasin.CheckedChanged, cbFighter.CheckedChanged, cbMarksman.CheckedChanged,
@@ -108,9 +101,6 @@ Public Class Form1
         ValidationModule.ValidasiMaxCheckedListBox(e, clbSinergis, "Hero Sinergi", 3)
     End Sub
 
-    ' =========================================================
-    ' PENCARIAN / SCROLL PADA CHECKEDLISTBOX
-    ' =========================================================
     Private Sub txtCariCounter_TextChanged(sender As Object, e As EventArgs) Handles txtCariCounter.TextChanged
         ScrollCheckedListBox(clbCounter, txtCariCounter.Text)
     End Sub
@@ -119,9 +109,6 @@ Public Class Form1
         ScrollCheckedListBox(clbSinergis, txtCariSinergis.Text)
     End Sub
 
-    ''' <summary>
-    ''' Scroll ke item pertama yang cocok dengan kata kunci pencarian.
-    ''' </summary>
     Private Sub ScrollCheckedListBox(clb As CheckedListBox, keyword As String)
         If String.IsNullOrWhiteSpace(keyword) Then Return
         For i As Integer = 0 To clb.Items.Count - 1
@@ -132,9 +119,6 @@ Public Class Form1
         Next
     End Sub
 
-    ' =========================================================
-    ' HELPER: MEMBACA NILAI CHECKBOX / CHECKEDLISTBOX → STRING
-    ' =========================================================
     Private Function GetRoleString() As String
         Dim roles As New List(Of String)
         If cbAssasin.Checked Then roles.Add("Assasin")
@@ -154,9 +138,6 @@ Public Class Form1
         Return String.Join(", ", listStr)
     End Function
 
-    ' =========================================================
-    ' TOMBOL CRUD
-    ' =========================================================
     Private Sub btnBrowse_Click(sender As Object, e As EventArgs) Handles btnBrowse.Click
         Dim openFile As New OpenFileDialog()
         openFile.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.webp"
@@ -168,7 +149,6 @@ Public Class Form1
     End Sub
 
     Private Sub btnTambah_Click(sender As Object, e As EventArgs) Handles btnTambah.Click
-        ' Validasi input
         If Not ValidationModule.ValidasiTambah(txtNama.Text, cbLane.Text, pathGambar) Then Return
 
         Dim berhasil = DataModule.TambahHero(
@@ -209,9 +189,6 @@ Public Class Form1
         End If
     End Sub
 
-    ' =========================================================
-    ' RESET / BERSIHKAN FORM
-    ' =========================================================
     Private Sub BersihkanForm()
         txtNama.Clear()
         cbLane.SelectedIndex = -1
@@ -220,12 +197,10 @@ Public Class Form1
         pathGambar = ""
         idHeroTerpilih = 0
 
-        ' Hapus centang semua role
         For Each chk As CheckBox In AllRoleCheckBoxes
             chk.Checked = False
         Next
 
-        ' Hapus centang Counter & Sinergi
         For i As Integer = 0 To clbCounter.Items.Count - 1
             clbCounter.SetItemChecked(i, False)
         Next

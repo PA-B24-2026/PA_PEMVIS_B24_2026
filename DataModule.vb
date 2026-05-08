@@ -2,19 +2,8 @@
 Imports MySql.Data.MySqlClient
 Imports MySqlConnector
 
-''' <summary>
-''' Modul untuk semua operasi data (CRUD) ke database.
-''' Bergantung pada ConnectionModule untuk koneksi.
-''' </summary>
 Public Module DataModule
 
-    ' =========================================================
-    ' SECTION 1: QUERY / READ DATA
-    ' =========================================================
-
-    ''' <summary>
-    ''' Membaca semua hero berdasarkan satu lane dan mengisi ListView beserta ImageList.
-    ''' </summary>
     Public Sub LoadDataSatuLane(namaLane As String, lv As ListView, imageListHero As ImageList)
         Try
             ConnectionModule.OpenConnection()
@@ -36,7 +25,6 @@ Public Module DataModule
                 Dim path As String = localReader("gambar").ToString()
                 Dim tier As String = localReader("grade_tier").ToString()
 
-                ' Tambahkan gambar ke ImageList jika belum ada
                 If Not imageListHero.Images.ContainsKey(id.ToString()) Then
                     If File.Exists(path) Then
                         imageListHero.Images.Add(id.ToString(), Image.FromFile(path))
@@ -49,7 +37,6 @@ Public Module DataModule
                 item.ImageKey = id.ToString()
                 item.Tag = id
 
-                ' Kelompokkan berdasarkan Tier
                 Select Case tier
                     Case "S" : item.Group = lv.Groups("grpS")
                     Case "A" : item.Group = lv.Groups("grpA")
@@ -68,9 +55,6 @@ Public Module DataModule
         End Try
     End Sub
 
-    ''' <summary>
-    ''' Model data sederhana untuk menampung detail satu hero dari database.
-    ''' </summary>
     Public Class HeroDetail
         Public Property IdHero As Integer
         Public Property NamaHero As String
@@ -82,10 +66,6 @@ Public Module DataModule
         Public Property Sinergi As String
     End Class
 
-    ''' <summary>
-    ''' Mengambil detail satu hero berdasarkan ID.
-    ''' Mengembalikan objek HeroDetail, atau Nothing jika tidak ditemukan.
-    ''' </summary>
     Public Function GetDetailHero(idHero As Integer) As HeroDetail
         Dim hasil As HeroDetail = Nothing
         Try
@@ -120,21 +100,13 @@ Public Module DataModule
         Return hasil
     End Function
 
-    ' =========================================================
-    ' SECTION 2: INSERT DATA
-    ' =========================================================
 
-    ''' <summary>
-    ''' Menambahkan hero baru ke tb_hero dan tb_tierlist.
-    ''' Mengembalikan True jika berhasil.
-    ''' </summary>
     Public Function TambahHero(nama As String, lane As String, tier As String,
                                 role As String, counter As String, sinergi As String,
                                 pathGambar As String) As Boolean
         Try
             ConnectionModule.OpenConnection()
 
-            ' Insert ke tb_hero
             Dim qHero As String =
                 "INSERT INTO tb_hero (nama_hero, role, counter, sinergi, gambar) " &
                 "VALUES (@nama, @role, @counter, @sinergi, @gambar)"
@@ -148,7 +120,6 @@ Public Module DataModule
 
             Dim idBaru As Integer = CInt(cmdHero.LastInsertedId)
 
-            ' Insert ke tb_tierlist
             Dim qTier As String =
                 "INSERT INTO tb_tierlist (id_hero, lane, grade_tier) VALUES (@id_hero, @lane, @tier)"
             Dim cmdTier = ConnectionModule.CreateCommand(qTier)
@@ -167,14 +138,7 @@ Public Module DataModule
         End Try
     End Function
 
-    ' =========================================================
-    ' SECTION 3: UPDATE DATA
-    ' =========================================================
 
-    ''' <summary>
-    ''' Memperbarui data hero yang sudah ada di tb_hero dan tb_tierlist.
-    ''' Mengembalikan True jika berhasil.
-    ''' </summary>
     Public Function UpdateHero(idHero As Integer, nama As String, lane As String, tier As String,
                                 role As String, counter As String, sinergi As String,
                                 pathGambar As String) As Boolean
@@ -211,24 +175,14 @@ Public Module DataModule
         End Try
     End Function
 
-    ' =========================================================
-    ' SECTION 4: DELETE DATA
-    ' =========================================================
-
-    ''' <summary>
-    ''' Menghapus hero dari tb_tierlist dan tb_hero berdasarkan ID.
-    ''' Mengembalikan True jika berhasil.
-    ''' </summary>
     Public Function HapusHero(idHero As Integer) As Boolean
         Try
             ConnectionModule.OpenConnection()
 
-            ' Hapus dari tb_tierlist dulu (foreign key)
             Dim cmdTier = ConnectionModule.CreateCommand("DELETE FROM tb_tierlist WHERE id_hero=@id")
             cmdTier.Parameters.AddWithValue("@id", idHero)
             cmdTier.ExecuteNonQuery()
 
-            ' Kemudian hapus dari tb_hero
             Dim cmdHero = ConnectionModule.CreateCommand("DELETE FROM tb_hero WHERE id_hero=@id")
             cmdHero.Parameters.AddWithValue("@id", idHero)
             cmdHero.ExecuteNonQuery()
