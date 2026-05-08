@@ -117,7 +117,7 @@ Partial Class Form1
         ListJung.Location = New Point(3, 3)
         ListJung.MultiSelect = False
         ListJung.Name = "ListJung"
-        ListJung.Size = New Size(1389, 332)
+        ListJung.Size = New Size(1389, 387)
         ListJung.TabIndex = 0
         ListJung.UseCompatibleStateImageBehavior = False
         ' 
@@ -131,7 +131,7 @@ Partial Class Form1
         TabControl1.Location = New Point(0, 0)
         TabControl1.Name = "TabControl1"
         TabControl1.SelectedIndex = 0
-        TabControl1.Size = New Size(1403, 368)
+        TabControl1.Size = New Size(1403, 423)
         TabControl1.TabIndex = 1
         ' 
         ' tbJung
@@ -140,7 +140,7 @@ Partial Class Form1
         tbJung.Location = New Point(4, 29)
         tbJung.Name = "tbJung"
         tbJung.Padding = New Padding(3)
-        tbJung.Size = New Size(1395, 335)
+        tbJung.Size = New Size(1395, 390)
         tbJung.TabIndex = 0
         tbJung.Text = "Jungle"
         tbJung.UseVisualStyleBackColor = True
@@ -151,7 +151,7 @@ Partial Class Form1
         TabPage2.Location = New Point(4, 29)
         TabPage2.Name = "TabPage2"
         TabPage2.Padding = New Padding(3)
-        TabPage2.Size = New Size(1395, 335)
+        TabPage2.Size = New Size(1395, 390)
         TabPage2.TabIndex = 1
         TabPage2.Text = "Roam"
         TabPage2.UseVisualStyleBackColor = True
@@ -174,7 +174,7 @@ Partial Class Form1
         ListRoam.Location = New Point(3, 3)
         ListRoam.MultiSelect = False
         ListRoam.Name = "ListRoam"
-        ListRoam.Size = New Size(1389, 332)
+        ListRoam.Size = New Size(1389, 387)
         ListRoam.TabIndex = 1
         ListRoam.UseCompatibleStateImageBehavior = False
         ' 
@@ -184,7 +184,7 @@ Partial Class Form1
         TabPage1.Location = New Point(4, 29)
         TabPage1.Name = "TabPage1"
         TabPage1.Padding = New Padding(3)
-        TabPage1.Size = New Size(1395, 335)
+        TabPage1.Size = New Size(1395, 390)
         TabPage1.TabIndex = 2
         TabPage1.Text = "ExpLane"
         TabPage1.UseVisualStyleBackColor = True
@@ -206,7 +206,7 @@ Partial Class Form1
         ListExp.Location = New Point(3, 3)
         ListExp.MultiSelect = False
         ListExp.Name = "ListExp"
-        ListExp.Size = New Size(1389, 332)
+        ListExp.Size = New Size(1389, 387)
         ListExp.TabIndex = 1
         ListExp.UseCompatibleStateImageBehavior = False
         ' 
@@ -216,7 +216,7 @@ Partial Class Form1
         TabPage3.Location = New Point(4, 29)
         TabPage3.Name = "TabPage3"
         TabPage3.Padding = New Padding(3)
-        TabPage3.Size = New Size(1395, 335)
+        TabPage3.Size = New Size(1395, 390)
         TabPage3.TabIndex = 3
         TabPage3.Text = "GoldLane"
         TabPage3.UseVisualStyleBackColor = True
@@ -238,7 +238,7 @@ Partial Class Form1
         ListGold.Location = New Point(3, 3)
         ListGold.MultiSelect = False
         ListGold.Name = "ListGold"
-        ListGold.Size = New Size(1389, 332)
+        ListGold.Size = New Size(1389, 387)
         ListGold.TabIndex = 2
         ListGold.UseCompatibleStateImageBehavior = False
         ' 
@@ -248,7 +248,7 @@ Partial Class Form1
         TabPage4.Location = New Point(4, 29)
         TabPage4.Name = "TabPage4"
         TabPage4.Padding = New Padding(3)
-        TabPage4.Size = New Size(1395, 335)
+        TabPage4.Size = New Size(1395, 390)
         TabPage4.TabIndex = 4
         TabPage4.Text = "MidLane"
         TabPage4.UseVisualStyleBackColor = True
@@ -270,13 +270,13 @@ Partial Class Form1
         ListMid.Location = New Point(3, 3)
         ListMid.MultiSelect = False
         ListMid.Name = "ListMid"
-        ListMid.Size = New Size(1389, 332)
+        ListMid.Size = New Size(1389, 387)
         ListMid.TabIndex = 2
         ListMid.UseCompatibleStateImageBehavior = False
         ' 
         ' btnBrowse
         ' 
-        btnBrowse.Location = New Point(125, 631)
+        btnBrowse.Location = New Point(125, 650)
         btnBrowse.Name = "btnBrowse"
         btnBrowse.Size = New Size(94, 29)
         btnBrowse.TabIndex = 12
@@ -287,14 +287,14 @@ Partial Class Form1
         ' 
         cbTier.FormattingEnabled = True
         cbTier.Items.AddRange(New Object() {"S", "A", "B", "C"})
-        cbTier.Location = New Point(656, 521)
+        cbTier.Location = New Point(656, 540)
         cbTier.Name = "cbTier"
         cbTier.Size = New Size(151, 28)
         cbTier.TabIndex = 11
         ' 
         ' btnTambah
         ' 
-        btnTambah.Location = New Point(24, 693)
+        btnTambah.Location = New Point(24, 712)
         btnTambah.Name = "btnTambah"
         btnTambah.Size = New Size(94, 29)
         btnTambah.TabIndex = 10
@@ -303,7 +303,7 @@ Partial Class Form1
         ' 
         ' btnHapus
         ' 
-        btnHapus.Location = New Point(279, 693)
+        btnHapus.Location = New Point(279, 712)
         btnHapus.Name = "btnHapus"
         btnHapus.Size = New Size(94, 29)
         btnHapus.TabIndex = 8
@@ -312,7 +312,7 @@ Partial Class Form1
         ' 
         ' btnUpdate
         ' 
-        btnUpdate.Location = New Point(150, 693)
+        btnUpdate.Location = New Point(150, 712)
         btnUpdate.Name = "btnUpdate"
         btnUpdate.Size = New Size(94, 29)
         btnUpdate.TabIndex = 7
@@ -321,15 +321,15 @@ Partial Class Form1
         ' 
         ' gambar
         ' 
-        gambar.Location = New Point(114, 479)
+        gambar.Location = New Point(114, 498)
         gambar.Name = "gambar"
-        gambar.Size = New Size(130, 130)
+        gambar.Size = New Size(128, 128)
         gambar.TabIndex = 5
         gambar.TabStop = False
         ' 
         ' txtNama
         ' 
-        txtNama.Location = New Point(431, 443)
+        txtNama.Location = New Point(431, 462)
         txtNama.Name = "txtNama"
         txtNama.PlaceholderText = "Nama Hero"
         txtNama.Size = New Size(376, 27)
@@ -347,7 +347,7 @@ Partial Class Form1
         gbRole.Controls.Add(cbFighter)
         gbRole.Controls.Add(cbMarksman)
         gbRole.Controls.Add(cbAssasin)
-        gbRole.Location = New Point(431, 568)
+        gbRole.Location = New Point(431, 587)
         gbRole.Name = "gbRole"
         gbRole.Size = New Size(376, 154)
         gbRole.TabIndex = 14
@@ -418,7 +418,7 @@ Partial Class Form1
         ' 
         cbLane.FormattingEnabled = True
         cbLane.Items.AddRange(New Object() {"Jungle", "Roam", "ExpLane", "GoldLane", "Midlane"})
-        cbLane.Location = New Point(431, 521)
+        cbLane.Location = New Point(431, 540)
         cbLane.Name = "cbLane"
         cbLane.Size = New Size(151, 28)
         cbLane.TabIndex = 15
@@ -436,7 +436,7 @@ Partial Class Form1
         ' 
         gbCounter.Controls.Add(txtCariCounter)
         gbCounter.Controls.Add(clbCounter)
-        gbCounter.Location = New Point(856, 410)
+        gbCounter.Location = New Point(856, 429)
         gbCounter.Name = "gbCounter"
         gbCounter.Size = New Size(250, 312)
         gbCounter.TabIndex = 17
@@ -472,7 +472,7 @@ Partial Class Form1
         ' 
         GroupBox3.Controls.Add(txtCariSinergis)
         GroupBox3.Controls.Add(clbSinergis)
-        GroupBox3.Location = New Point(1141, 410)
+        GroupBox3.Location = New Point(1141, 429)
         GroupBox3.Name = "GroupBox3"
         GroupBox3.Size = New Size(250, 312)
         GroupBox3.TabIndex = 18
@@ -482,7 +482,7 @@ Partial Class Form1
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(431, 498)
+        Label1.Location = New Point(431, 517)
         Label1.Name = "Label1"
         Label1.Size = New Size(40, 20)
         Label1.TabIndex = 19
@@ -491,7 +491,7 @@ Partial Class Form1
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(656, 498)
+        Label2.Location = New Point(656, 517)
         Label2.Name = "Label2"
         Label2.Size = New Size(34, 20)
         Label2.TabIndex = 20
@@ -500,7 +500,7 @@ Partial Class Form1
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(431, 410)
+        Label3.Location = New Point(431, 429)
         Label3.Name = "Label3"
         Label3.Size = New Size(49, 20)
         Label3.TabIndex = 21
@@ -509,7 +509,7 @@ Partial Class Form1
         ' Label4
         ' 
         Label4.AutoSize = True
-        Label4.Location = New Point(138, 433)
+        Label4.Location = New Point(138, 452)
         Label4.Name = "Label4"
         Label4.Size = New Size(81, 20)
         Label4.TabIndex = 22
