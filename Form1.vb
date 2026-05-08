@@ -2,7 +2,7 @@
 
 Public Class Form1
 
-    Dim pathGambar As String = ""
+    Dim pathGambar As String = Path.Combine(Application.StartupPath, "Images", "")
     Dim idHeroTerpilih As Integer = 0
     Dim imageListHero As New ImageList()
 
@@ -62,7 +62,7 @@ Public Class Form1
         cbLane.Text = hero.Lane
         cbTier.Text = hero.GradeTier
 
-        pathGambar = hero.Gambar
+        pathGambar = Path.Combine(Application.StartupPath, "Images", hero.Gambar)
         If File.Exists(pathGambar) Then
             gambar.ImageLocation = pathGambar
             gambar.SizeMode = PictureBoxSizeMode.Zoom
@@ -142,9 +142,13 @@ Public Class Form1
         Dim openFile As New OpenFileDialog()
         openFile.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.webp"
         If openFile.ShowDialog() = DialogResult.OK Then
-            pathGambar = openFile.FileName
-            gambar.ImageLocation = pathGambar
-            gambar.SizeMode = PictureBoxSizeMode.Zoom
+            Dim pathAsli As String = openFile.FileName
+            Dim namaFile As String = Path.GetFileName(pathAsli)
+            Dim folderAplikasi As String = Path.Combine(Application.StartupPath, "Images")
+            If Not Directory.Exists(folderAplikasi) Then
+                Directory.CreateDirectory(folderAplikasi)
+            End If
+            Dim pathTujuan As String = Path.Combine(namaFile)
         End If
     End Sub
 

@@ -22,12 +22,14 @@ Public Module DataModule
             While localReader.Read()
                 Dim id As Integer = localReader("id_hero")
                 Dim nama As String = localReader("nama_hero").ToString()
-                Dim path As String = localReader("gambar").ToString()
+                Dim paths As String = Path.Combine(Application.StartupPath, "Images", localReader("gambar").ToString())
+
+
                 Dim tier As String = localReader("grade_tier").ToString()
 
                 If Not imageListHero.Images.ContainsKey(id.ToString()) Then
-                    If File.Exists(path) Then
-                        imageListHero.Images.Add(id.ToString(), Image.FromFile(path))
+                    If File.Exists(paths) Then
+                        imageListHero.Images.Add(id.ToString(), Image.FromFile(paths))
                     Else
                         imageListHero.Images.Add(id.ToString(), New Bitmap(80, 80))
                     End If
@@ -103,7 +105,7 @@ Public Module DataModule
 
     Public Function TambahHero(nama As String, lane As String, tier As String,
                                 role As String, counter As String, sinergi As String,
-                                pathGambar As String) As Boolean
+                                pathTujuan As String) As Boolean
         Try
             ConnectionModule.OpenConnection()
 
@@ -115,7 +117,7 @@ Public Module DataModule
             cmdHero.Parameters.AddWithValue("@role", role)
             cmdHero.Parameters.AddWithValue("@counter", counter)
             cmdHero.Parameters.AddWithValue("@sinergi", sinergi)
-            cmdHero.Parameters.AddWithValue("@gambar", pathGambar.Replace("\", "\\"))
+            cmdHero.Parameters.AddWithValue("@gambar", pathTujuan)
             cmdHero.ExecuteNonQuery()
 
             Dim idBaru As Integer = CInt(cmdHero.LastInsertedId)
@@ -141,7 +143,7 @@ Public Module DataModule
 
     Public Function UpdateHero(idHero As Integer, nama As String, lane As String, tier As String,
                                 role As String, counter As String, sinergi As String,
-                                pathGambar As String) As Boolean
+                                pathTujuan As String) As Boolean
         Try
             ConnectionModule.OpenConnection()
 
@@ -153,7 +155,7 @@ Public Module DataModule
             cmdHero.Parameters.AddWithValue("@role", role)
             cmdHero.Parameters.AddWithValue("@counter", counter)
             cmdHero.Parameters.AddWithValue("@sinergi", sinergi)
-            cmdHero.Parameters.AddWithValue("@gambar", pathGambar.Replace("\", "\\"))
+            cmdHero.Parameters.AddWithValue("@gambar", pathTujuan)
             cmdHero.Parameters.AddWithValue("@id", idHero)
             cmdHero.ExecuteNonQuery()
 
