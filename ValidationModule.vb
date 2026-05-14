@@ -27,7 +27,7 @@ Public Module ValidationModule
     End Function
 
     Public Function ValidasiMaxRole(checkboxes As IEnumerable(Of CheckBox), chkBaru As CheckBox) As Boolean
-        If Not chkBaru.Checked Then Return True ' Tidak perlu validasi saat uncheck
+        If Not chkBaru.Checked Then Return True
 
         Dim hitungRole As Integer = checkboxes.Count(Function(c) c.Checked)
         If hitungRole > 2 Then

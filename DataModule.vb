@@ -3,196 +3,162 @@ Imports MySql.Data.MySqlClient
 Imports MySqlConnector
 
 Public Module DataModule
-
+    ' Mengatur ListView agar membentuk baris-baris (Group) berdasarkan Tier
     Public Sub LoadDataSatuLane(namaLane As String, lv As ListView, imageListHero As ImageList)
         Try
             ConnectionModule.OpenConnection()
             lv.Items.Clear()
             lv.LargeImageList = imageListHero
 
-            Dim query As String =
-                "SELECT h.id_hero, h.nama_hero, h.gambar, t.grade_tier " &
-                "FROM tb_hero h JOIN tb_tierlist t ON h.id_hero = t.id_hero " &
-                "WHERE t.lane = @lane"
+            ' Setup Tampilan Tabel per Tier (ListView Group)
+            lv.Groups.Clear()
+            lv.Groups.Add(New ListViewGroup("S", "TIER S"))
+            lv.Groups.Add(New ListViewGroup("A", "TIER A"))
+            lv.Groups.Add(New ListViewGroup("B", "TIER B"))
+            lv.Groups.Add(New ListViewGroup("C", "TIER C"))
+            lv.ShowGroups = True
 
+            Dim query As String = "SELECT h.id_hero, h.nama_hero, h.gambar, t.grade_tier " &
+                                 "FROM tb_hero h JOIN tb_tierlist t ON h.id_hero = t.id_hero " &
+                                 "WHERE t.lane = @lane ORDER BY t.grade_tier ASC"
             Dim cmd = ConnectionModule.CreateCommand(query)
             cmd.Parameters.AddWithValue("@lane", namaLane)
 
-            Dim localReader As MySqlDataReader = cmd.ExecuteReader()
-            While localReader.Read()
-                Dim id As Integer = localReader("id_hero")
-                Dim nama As String = localReader("nama_hero").ToString()
-                Dim paths As String = Path.Combine(Application.StartupPath, "Images", localReader("gambar").ToString())
+            Dim dr As MySqlDataReader = cmd.ExecuteReader()
+            While dr.Read()
+                Dim id = dr("id_hero").ToString()
+                Dim nama = dr("nama_hero").ToString()
+                Dim imgName = dr("gambar").ToString()
+                Dim tier = dr("grade_tier").ToString()
+                Dim pathImg = Path.Combine(Application.StartupPath, "Images", imgName)
 
-
-                Dim tier As String = localReader("grade_tier").ToString()
-
-                If Not imageListHero.Images.ContainsKey(id.ToString()) Then
-                    If File.Exists(paths) Then
-                        imageListHero.Images.Add(id.ToString(), Image.FromFile(paths))
+                If Not imageListHero.Images.ContainsKey(id) Then
+                    If File.Exists(pathImg) Then
+                        imageListHero.Images.Add(id, Image.FromFile(pathImg))
                     Else
-                        imageListHero.Images.Add(id.ToString(), New Bitmap(80, 80))
+                        imageListHero.Images.Add(id, New Bitmap(80, 80)) ' Jika gambar tidak ada
                     End If
                 End If
 
-                Dim item As New ListViewItem(nama)
-                item.ImageKey = id.ToString()
+                Dim item As New ListViewItem(nama, id) ' Tampilkan gambar dan nama hero
                 item.Tag = id
 
-                Select Case tier
-                    Case "S" : item.Group = lv.Groups("grpS")
-                    Case "A" : item.Group = lv.Groups("grpA")
-                    Case "B" : item.Group = lv.Groups("grpB")
-                    Case "C" : item.Group = lv.Groups("grpC")
-                End Select
+                ' Masukkan hero ke dalam baris Tier yang sesuai
+                For Each grp As ListViewGroup In lv.Groups
+                    If grp.Name = tier Then
+                        item.Group = grp
+                        Exit For
+                    End If
+                Next
 
                 lv.Items.Add(item)
             End While
-            localReader.Close()
-
-        Catch ex As Exception
-            MsgBox("Gagal memuat data " & namaLane & ": " & ex.Message, MsgBoxStyle.Critical)
+            dr.Close()
         Finally
             ConnectionModule.CloseConnection()
         End Try
     End Sub
 
-    Public Class HeroDetail
-        Public Property IdHero As Integer
-        Public Property NamaHero As String
-        Public Property Lane As String
-        Public Property GradeTier As String
-        Public Property Gambar As String
-        Public Property Role As String
-        Public Property Counter As String
-        Public Property Sinergi As String
-    End Class
-
-    Public Function GetDetailHero(idHero As Integer) As HeroDetail
-        Dim hasil As HeroDetail = Nothing
+    Public Function GetAllHero() As DataTable
+        Dim dt As New DataTable()
         Try
             ConnectionModule.OpenConnection()
-            Dim query As String =
-                "SELECT h.*, t.lane, t.grade_tier FROM tb_hero h " &
-                "JOIN tb_tierlist t ON h.id_hero = t.id_hero WHERE h.id_hero = @id"
-
+            Dim query = "SELECT h.id_hero, h.nama_hero, h.role, t.lane, t.grade_tier, h.deskripsi FROM tb_hero h JOIN tb_tierlist t ON h.id_hero = t.id_hero"
             Dim cmd = ConnectionModule.CreateCommand(query)
-            cmd.Parameters.AddWithValue("@id", idHero)
-            Dim reader As MySqlDataReader = cmd.ExecuteReader()
+            Dim adp As New MySqlDataAdapter(cmd)
+            adp.Fill(dt)
+        Finally
+            ConnectionModule.CloseConnection()
+        End Try
+        Return dt
+    End Function
 
-            If reader.Read() Then
-                hasil = New HeroDetail With {
-                    .IdHero = idHero,
-                    .NamaHero = reader("nama_hero").ToString(),
-                    .Lane = reader("lane").ToString(),
-                    .GradeTier = reader("grade_tier").ToString(),
-                    .Gambar = reader("gambar").ToString(),
-                    .Role = reader("role").ToString(),
-                    .Counter = reader("counter").ToString(),
-                    .Sinergi = reader("sinergi").ToString()
-                }
+    Public Function GetDetailHero(id As Integer) As (Nama As String, Role As String, Deskripsi As String)
+        Dim hasil = ("", "", "")
+        Try
+            ConnectionModule.OpenConnection()
+            Dim cmd = ConnectionModule.CreateCommand("SELECT * FROM tb_hero WHERE id_hero=@id")
+            cmd.Parameters.AddWithValue("@id", id)
+            Dim dr = cmd.ExecuteReader()
+            If dr.Read() Then
+                hasil = (dr("nama_hero").ToString(), dr("role").ToString(), dr("deskripsi").ToString())
             End If
-            reader.Close()
-
-        Catch ex As Exception
-            MsgBox("Gagal mengambil detail hero: " & ex.Message, MsgBoxStyle.Critical)
+            dr.Close()
         Finally
             ConnectionModule.CloseConnection()
         End Try
         Return hasil
     End Function
 
-
-    Public Function TambahHero(nama As String, lane As String, tier As String,
-                                role As String, counter As String, sinergi As String,
-                                pathTujuan As String) As Boolean
+    Public Function TambahHero(nama As String, lane As String, tier As String, role As String, deskripsi As String, gambar As String) As Boolean
         Try
             ConnectionModule.OpenConnection()
+            ' Insert ke tb_hero
+            Dim qHero = "INSERT INTO tb_hero (nama_hero, role, deskripsi, gambar) VALUES (@nama, @role, @desc, @img); SELECT LAST_INSERT_ID();"
+            Dim cmdH = ConnectionModule.CreateCommand(qHero)
+            cmdH.Parameters.AddWithValue("@nama", nama)
+            cmdH.Parameters.AddWithValue("@role", role)
+            cmdH.Parameters.AddWithValue("@desc", deskripsi)
+            cmdH.Parameters.AddWithValue("@img", gambar)
 
-            Dim qHero As String =
-                "INSERT INTO tb_hero (nama_hero, role, counter, sinergi, gambar) " &
-                "VALUES (@nama, @role, @counter, @sinergi, @gambar)"
-            Dim cmdHero = ConnectionModule.CreateCommand(qHero)
-            cmdHero.Parameters.AddWithValue("@nama", nama)
-            cmdHero.Parameters.AddWithValue("@role", role)
-            cmdHero.Parameters.AddWithValue("@counter", counter)
-            cmdHero.Parameters.AddWithValue("@sinergi", sinergi)
-            cmdHero.Parameters.AddWithValue("@gambar", pathTujuan)
-            cmdHero.ExecuteNonQuery()
+            Dim newId = Convert.ToInt32(cmdH.ExecuteScalar())
 
-            Dim idBaru As Integer = CInt(cmdHero.LastInsertedId)
-
-            Dim qTier As String =
-                "INSERT INTO tb_tierlist (id_hero, lane, grade_tier) VALUES (@id_hero, @lane, @tier)"
-            Dim cmdTier = ConnectionModule.CreateCommand(qTier)
-            cmdTier.Parameters.AddWithValue("@id_hero", idBaru)
-            cmdTier.Parameters.AddWithValue("@lane", lane)
-            cmdTier.Parameters.AddWithValue("@tier", tier)
-            cmdTier.ExecuteNonQuery()
-
+            ' Insert ke tb_tierlist
+            Dim qTier = "INSERT INTO tb_tierlist (id_hero, lane, grade_tier) VALUES (@id, @lane, @tier)"
+            Dim cmdT = ConnectionModule.CreateCommand(qTier)
+            cmdT.Parameters.AddWithValue("@id", newId)
+            cmdT.Parameters.AddWithValue("@lane", lane)
+            cmdT.Parameters.AddWithValue("@tier", tier)
+            cmdT.ExecuteNonQuery()
             Return True
 
         Catch ex As Exception
-            MsgBox("Gagal menambah data: " & ex.Message, MsgBoxStyle.Critical)
+            MsgBox(ex.Message)
             Return False
         Finally
             ConnectionModule.CloseConnection()
         End Try
     End Function
 
-
-    Public Function UpdateHero(idHero As Integer, nama As String, lane As String, tier As String,
-                                role As String, counter As String, sinergi As String,
-                                pathTujuan As String) As Boolean
+    Public Function HapusHero(id As Integer) As Boolean
         Try
             ConnectionModule.OpenConnection()
-
-            Dim qHero As String =
-                "UPDATE tb_hero SET nama_hero=@nama, role=@role, counter=@counter, " &
-                "sinergi=@sinergi, gambar=@gambar WHERE id_hero=@id"
-            Dim cmdHero = ConnectionModule.CreateCommand(qHero)
-            cmdHero.Parameters.AddWithValue("@nama", nama)
-            cmdHero.Parameters.AddWithValue("@role", role)
-            cmdHero.Parameters.AddWithValue("@counter", counter)
-            cmdHero.Parameters.AddWithValue("@sinergi", sinergi)
-            cmdHero.Parameters.AddWithValue("@gambar", pathTujuan)
-            cmdHero.Parameters.AddWithValue("@id", idHero)
-            cmdHero.ExecuteNonQuery()
-
-            Dim qTier As String =
-                "UPDATE tb_tierlist SET lane=@lane, grade_tier=@tier WHERE id_hero=@id"
-            Dim cmdTier = ConnectionModule.CreateCommand(qTier)
-            cmdTier.Parameters.AddWithValue("@lane", lane)
-            cmdTier.Parameters.AddWithValue("@tier", tier)
-            cmdTier.Parameters.AddWithValue("@id", idHero)
-            cmdTier.ExecuteNonQuery()
-
+            ' Karena di SQL pakai ON DELETE CASCADE, cukup hapus data di tb_hero saja. Tierlist otomatis terhapus.
+            Dim cmd = ConnectionModule.CreateCommand("DELETE FROM tb_hero WHERE id_hero=@id")
+            cmd.Parameters.AddWithValue("@id", id)
+            cmd.ExecuteNonQuery()
             Return True
-
-        Catch ex As Exception
-            MsgBox("Gagal mengupdate data: " & ex.Message, MsgBoxStyle.Critical)
+        Catch
             Return False
         Finally
             ConnectionModule.CloseConnection()
         End Try
     End Function
 
-    Public Function HapusHero(idHero As Integer) As Boolean
+    Public Function UpdateHero(id As Integer, nama As String, lane As String, tier As String, role As String, deskripsi As String, gambar As String) As Boolean
         Try
             ConnectionModule.OpenConnection()
+            ' Update tabel tb_hero
+            Dim qHero = "UPDATE tb_hero SET nama_hero=@nama, role=@role, deskripsi=@desc, gambar=@img WHERE id_hero=@id"
+            Dim cmdH = ConnectionModule.CreateCommand(qHero)
+            cmdH.Parameters.AddWithValue("@nama", nama)
+            cmdH.Parameters.AddWithValue("@role", role)
+            cmdH.Parameters.AddWithValue("@desc", deskripsi)
+            cmdH.Parameters.AddWithValue("@img", gambar)
+            cmdH.Parameters.AddWithValue("@id", id)
+            cmdH.ExecuteNonQuery()
 
-            Dim cmdTier = ConnectionModule.CreateCommand("DELETE FROM tb_tierlist WHERE id_hero=@id")
-            cmdTier.Parameters.AddWithValue("@id", idHero)
-            cmdTier.ExecuteNonQuery()
-
-            Dim cmdHero = ConnectionModule.CreateCommand("DELETE FROM tb_hero WHERE id_hero=@id")
-            cmdHero.Parameters.AddWithValue("@id", idHero)
-            cmdHero.ExecuteNonQuery()
-
+            ' Update tabel tb_tierlist
+            Dim qTier = "UPDATE tb_tierlist SET lane=@lane, grade_tier=@tier WHERE id_hero=@id"
+            Dim cmdT = ConnectionModule.CreateCommand(qTier)
+            cmdT.Parameters.AddWithValue("@lane", lane)
+            cmdT.Parameters.AddWithValue("@tier", tier)
+            cmdT.Parameters.AddWithValue("@id", id)
+            cmdT.ExecuteNonQuery()
             Return True
 
         Catch ex As Exception
-            MsgBox("Gagal menghapus data: " & ex.Message, MsgBoxStyle.Critical)
+            MsgBox("Gagal Update: " & ex.Message)
             Return False
         Finally
             ConnectionModule.CloseConnection()
