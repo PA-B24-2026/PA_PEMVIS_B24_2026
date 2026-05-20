@@ -195,4 +195,21 @@ Public Class FormTierList
             MsgBox($"NAMA HERO: {detail.Nama}{vbCrLf}ROLE: {detail.Role}{vbCrLf}DESKRIPSI: {detail.Deskripsi}", MsgBoxStyle.Information, "Detail")
         End If
     End Sub
+
+    Protected Overrides Sub WndProc(ByRef m As Message)
+        Const WM_SYSCOMMAND As Integer = &H112
+        Const SC_MOVE As Integer = &HF010
+
+        ' Jika ada perintah sistem untuk menggeser (move) form
+        If m.Msg = WM_SYSCOMMAND Then
+            Dim command As Integer = m.WParam.ToInt32() And &HFFF0
+            If command = SC_MOVE Then
+                Return ' Abaikan perintah geser, form akan diam di tempat
+            End If
+        End If
+
+        ' Lanjutkan pesan sistem lainnya (seperti klik tombol close, dll)
+        MyBase.WndProc(m)
+    End Sub
+
 End Class
