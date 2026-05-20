@@ -57,4 +57,22 @@ Public Module ValidationModule
         Return hasil = DialogResult.Yes
     End Function
 
+    Public Function CekDuplikatTier(dgv As DataGridView, namaHero As String, lane As String, idAbaikan As Integer) As Boolean
+        For Each row As DataGridViewRow In dgv.Rows
+            If row.Cells("nama_hero").Value IsNot Nothing Then
+                Dim rowId As Integer = Val(row.Cells("id_hero").Value)
+                Dim rowNama As String = row.Cells("nama_hero").Value.ToString()
+                Dim rowLane As String = row.Cells("lane").Value.ToString()
+
+                ' Abaikan pengecekan pada ID diri sendiri saat melakukan proses Update (Edit)
+                If rowId <> idAbaikan Then
+                    If rowNama.ToLower() = namaHero.ToLower() AndAlso rowLane.ToLower() = lane.ToLower() Then
+                        Return True ' Duplikat ditemui!
+                    End If
+                End If
+            End If
+        Next
+        Return False ' Tiada duplikat
+    End Function
+
 End Module

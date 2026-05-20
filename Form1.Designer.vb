@@ -57,7 +57,7 @@ Partial Class Form1
         ' LabelNavigasi
         ' 
         LabelNavigasi.AutoSize = True
-        LabelNavigasi.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        LabelNavigasi.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         LabelNavigasi.ForeColor = Color.FromArgb(CByte(155), CByte(89), CByte(182))
         LabelNavigasi.Location = New Point(23, 40)
         LabelNavigasi.Name = "LabelNavigasi"
@@ -70,7 +70,7 @@ Partial Class Form1
         btnNavTierList.BackColor = Color.Transparent
         btnNavTierList.FlatAppearance.BorderSize = 0
         btnNavTierList.FlatStyle = FlatStyle.Flat
-        btnNavTierList.Font = New Font("Segoe UI", 10.0F)
+        btnNavTierList.Font = New Font("Segoe UI", 10F)
         btnNavTierList.ForeColor = Color.Gainsboro
         btnNavTierList.Location = New Point(0, 227)
         btnNavTierList.Margin = New Padding(3, 4, 3, 4)
@@ -87,7 +87,7 @@ Partial Class Form1
         btnNavManage.BackColor = Color.Transparent
         btnNavManage.FlatAppearance.BorderSize = 0
         btnNavManage.FlatStyle = FlatStyle.Flat
-        btnNavManage.Font = New Font("Segoe UI", 10.0F)
+        btnNavManage.Font = New Font("Segoe UI", 10F)
         btnNavManage.ForeColor = Color.Gainsboro
         btnNavManage.Location = New Point(0, 167)
         btnNavManage.Margin = New Padding(3, 4, 3, 4)
@@ -104,7 +104,7 @@ Partial Class Form1
         btnNavDashboard.BackColor = Color.FromArgb(CByte(52), CByte(152), CByte(219))
         btnNavDashboard.FlatAppearance.BorderSize = 0
         btnNavDashboard.FlatStyle = FlatStyle.Flat
-        btnNavDashboard.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        btnNavDashboard.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         btnNavDashboard.ForeColor = Color.White
         btnNavDashboard.Location = New Point(0, 107)
         btnNavDashboard.Margin = New Padding(3, 4, 3, 4)
@@ -156,7 +156,7 @@ Partial Class Form1
         ' lblLane
         ' 
         lblLane.AutoSize = True
-        lblLane.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold)
+        lblLane.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
         lblLane.ForeColor = Color.White
         lblLane.Location = New Point(23, 20)
         lblLane.Name = "lblLane"
@@ -167,7 +167,7 @@ Partial Class Form1
         ' LabelC3
         ' 
         LabelC3.AutoSize = True
-        LabelC3.Font = New Font("Segoe UI", 10.0F)
+        LabelC3.Font = New Font("Segoe UI", 10F)
         LabelC3.ForeColor = Color.DarkGray
         LabelC3.Location = New Point(27, 87)
         LabelC3.Name = "LabelC3"
@@ -200,7 +200,7 @@ Partial Class Form1
         ' lblTotalTier
         ' 
         lblTotalTier.AutoSize = True
-        lblTotalTier.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold)
+        lblTotalTier.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
         lblTotalTier.ForeColor = Color.White
         lblTotalTier.Location = New Point(23, 20)
         lblTotalTier.Name = "lblTotalTier"
@@ -211,7 +211,7 @@ Partial Class Form1
         ' LabelC2
         ' 
         LabelC2.AutoSize = True
-        LabelC2.Font = New Font("Segoe UI", 10.0F)
+        LabelC2.Font = New Font("Segoe UI", 10F)
         LabelC2.ForeColor = Color.DarkGray
         LabelC2.Location = New Point(27, 87)
         LabelC2.Name = "LabelC2"
@@ -244,7 +244,7 @@ Partial Class Form1
         ' lblTotalHero
         ' 
         lblTotalHero.AutoSize = True
-        lblTotalHero.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold)
+        lblTotalHero.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
         lblTotalHero.ForeColor = Color.White
         lblTotalHero.Location = New Point(23, 20)
         lblTotalHero.Name = "lblTotalHero"
@@ -255,7 +255,7 @@ Partial Class Form1
         ' LabelC1
         ' 
         LabelC1.AutoSize = True
-        LabelC1.Font = New Font("Segoe UI", 10.0F)
+        LabelC1.Font = New Font("Segoe UI", 10F)
         LabelC1.ForeColor = Color.DarkGray
         LabelC1.Location = New Point(27, 87)
         LabelC1.Name = "LabelC1"
@@ -266,7 +266,7 @@ Partial Class Form1
         ' LabelSubtitle
         ' 
         LabelSubtitle.AutoSize = True
-        LabelSubtitle.Font = New Font("Segoe UI", 12.0F)
+        LabelSubtitle.Font = New Font("Segoe UI", 12F)
         LabelSubtitle.ForeColor = Color.DarkGray
         LabelSubtitle.Location = New Point(51, 120)
         LabelSubtitle.Name = "LabelSubtitle"
@@ -277,9 +277,9 @@ Partial Class Form1
         ' LabelTitle
         ' 
         LabelTitle.AutoSize = True
-        LabelTitle.Font = New Font("Segoe UI", 24.0F, FontStyle.Bold)
+        LabelTitle.Font = New Font("Segoe UI", 24F, FontStyle.Bold)
         LabelTitle.ForeColor = Color.FromArgb(CByte(241), CByte(196), CByte(15))
-        LabelTitle.Location = New Point(46, 53)
+        LabelTitle.Location = New Point(51, 66)
         LabelTitle.Name = "LabelTitle"
         LabelTitle.Size = New Size(477, 54)
         LabelTitle.TabIndex = 4
@@ -287,7 +287,7 @@ Partial Class Form1
         ' 
         ' Form1
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1086, 747)
         Controls.Add(pnlMain)
