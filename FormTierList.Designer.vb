@@ -83,7 +83,7 @@ Partial Class FormTierList
         btnPrint.BackColor = Color.FromArgb(CByte(52), CByte(152), CByte(219))
         btnPrint.FlatAppearance.BorderSize = 0
         btnPrint.FlatStyle = FlatStyle.Flat
-        btnPrint.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        btnPrint.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         btnPrint.ForeColor = Color.White
         btnPrint.Location = New Point(14, 13)
         btnPrint.Margin = New Padding(3, 4, 3, 4)
@@ -231,7 +231,7 @@ Partial Class FormTierList
         ' 
         ' FormTierList
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(26), CByte(26), CByte(46))
         ClientSize = New Size(971, 800)
